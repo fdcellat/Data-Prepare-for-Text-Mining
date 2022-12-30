@@ -24,10 +24,10 @@ data=pd.read_excel(r'Path')
 
 data.isnull().sum()
 
-data=data.dropna(subset=['rawdata'])
+data=data.dropna(subset=['text col name'])# your text column | veri istediğin sütun adı
 
 def textmining(data,col):
-    data[col] = data[col].apply(lambda x: GoogleTranslator(source='tr', target='en').translate(x))#you can change auto to your language
+    data[col] = data[col].apply(lambda x: GoogleTranslator(source='auto', target='en').translate(x))#you can change auto to your language | auto'yu istediğin dil ile değiştirebilirsin
     data[col] = data[col].str.lower()
     data[col] = data[col].str.replace('[^\w\s]', '')
     data[col] = data[col].str.replace('\d', '')
@@ -39,7 +39,7 @@ def textmining(data,col):
     tf = tf.sort_values("tf", ascending = False).reset_index()
     return tf
 
-tf=textmining(data,'rawdata')
+tf=textmining(data,'text col name')# your text column | veri istediğin sütun adı
 
 tf['tr_word'] = tf['words'].apply(lambda x: GoogleTranslator(source='en', target='tr').translate(x))
 
